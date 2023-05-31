@@ -1,0 +1,1 @@
+export type EndsWith<T extends string> = `${string}${T}`;
