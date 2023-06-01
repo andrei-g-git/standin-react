@@ -2,20 +2,25 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import ListItem from "@mui/material/ListItem";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
+import Switch from "@mui/material/Switch";
 import { YoutubeStandin } from "~/components";
 import { useState } from "react";
+import styles from "./ToggleRedirector.module.scss";
 
 const ToggledRedirector = () => {
     const [test, setTest] = useState("1");
 
     return (
-        <MenuItem sx={{width: "250px"}}>
-            <ButtonGroup variant="contained" fullWidth>
+        <ListItem sx={{width: "250px", paddingInlineStart: 0}}>
+            <Switch sx={{marginRight: "15%"}}/>
+            <ButtonGroup variant="contained" fullWidth >
+
                 <FormControl fullWidth>
                     <InputLabel>Youtube</InputLabel>
-                    <Select sx={{ borderTopRightRadius: "0%", borderBottomRightRadius: "0%" }}
+                    <Select className={styles["square-border-right"]}
                         label="Youtube"
                         value={test}
                         onChange={(event: SelectChangeEvent) => setTest(event.target.value)}
@@ -26,14 +31,14 @@ const ToggledRedirector = () => {
                     </Select>                    
                 </FormControl>
 
-                <Button sx={{ borderTopLeftRadius: "0%", borderBottomLeftRadius: "0%", width: "auto"}}
+                <Button className={styles["square-border-left"]}
                     variant="outlined"
                     endIcon={<YoutubeStandin width="100%" height="100%" />}
                     size="large"
                     fullWidth
                 />
             </ButtonGroup>        
-        </MenuItem>
+        </ListItem>
 
     )
 }

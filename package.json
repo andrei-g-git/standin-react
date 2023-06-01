@@ -15,6 +15,7 @@
   "devDependencies": {
     "@samrum/vite-plugin-web-extension": "^4.0.0",
     "@types/chrome": "^0.0.228",
+    "@types/js-yaml": "^4.0.5",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/webextension-polyfill": "^0.10.0",
@@ -28,6 +29,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.3",
+    "js-yaml": "^4.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.62.1",
