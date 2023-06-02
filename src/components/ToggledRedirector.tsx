@@ -16,7 +16,10 @@ const ToggledRedirector = () => {
     return (
         <ListItem sx={{width: "250px", paddingInlineStart: 0}}>
             <Switch sx={{marginRight: "15%"}}/>
-            <ButtonGroup variant="contained" fullWidth >
+            <ButtonGroup variant="contained" 
+                fullWidth 
+                disableRipple //and do it on children components too
+            >
 
                 <FormControl fullWidth>
                     <InputLabel>Youtube</InputLabel>

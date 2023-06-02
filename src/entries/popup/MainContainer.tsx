@@ -1,6 +1,6 @@
 import Container from "@mui/material/Container";
 import List from "@mui/material/List";
-import { Logo, Test } from "~/components";
+import { Logo } from "~/components";
 import styles from "./MainContainer.module.scss";
 import Box from "@mui/material/Box";
 import {ToggledRedirector} from "~/components";

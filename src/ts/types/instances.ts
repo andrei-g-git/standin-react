@@ -1,9 +1,24 @@
+// export type GeneralInstance = {
+//     [key: string]: {
+//         [key: string]: {
+//             api: string,
+//             format: number,
+//             getUrls: (instanceData: any) => string[]        
+//         }        
+//     }
+
+import { StartsWith } from "./strings";
+
+// }
+
 export type GeneralInstance = {
-    [key: string]: {
+    group: "string",
+    apis: {
+        name: string,
         api: string,
         format: number,
-        getUrls: (instanceData: any) => string[]        
-    }
+        getUrls: (instanceData: any) => string[];
+    }[]           
 }
 
 export type InvidiousInstance = [
@@ -42,5 +57,20 @@ export type TedditInstance = {
     onion?: string,
     i2p?: string,
     notes?: string,
+}
+
+export type Instance = InvidiousInstance | PipedInstance | NitterInstance | LibredditInstance | TedditInstance;
+
+export type OfficialDomain = "none" | "youtube" | "twitter" | "reddit" | "tiktok" | "medium" | "imgur";
+
+export type DomainGroup = {
+    group: OfficialDomain,
+    apis: {
+        api: string,
+        instances: {
+            name: string,
+            url: StartsWith<"https://"> | StartsWith<"http://">
+        }[]
+    }[]
 }
 

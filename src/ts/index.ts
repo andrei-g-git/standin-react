@@ -1,5 +1,6 @@
 export type {
     EndsWith,
+    StartsWith
 } from "./types/strings";
 
 export type {
@@ -8,7 +9,10 @@ export type {
     PipedInstance,
     NitterInstance,
     LibredditInstance,
-    TedditInstance
+    TedditInstance,
+    Instance,
+    OfficialDomain,
+    DomainGroup
 } from "./types/instances";
 
 export {
@@ -16,3 +20,13 @@ export {
 } from "./constants/formats";
 
 export {lightTheme} from "./themes";
+
+export {
+    getDataFromStorage,
+    storeDataToStorage
+} from "./storage";
+
+export {
+    publicInstances,
+    fetchInstances
+} from "./instanceApi";

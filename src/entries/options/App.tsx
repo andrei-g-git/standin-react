@@ -1,10 +1,11 @@
-
+import {MainOptions} from "~/entries/options";
 import "./App.css";
 
 function App() {
   return (
-    <main>
-      
+    <main className="options-app
+    ">
+      <MainOptions />
     </main>
   );
 }
