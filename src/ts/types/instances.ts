@@ -74,3 +74,9 @@ export type DomainGroup = {
     }[]
 }
 
+export type InstanceGroup = {
+    group: OfficialDomain, 
+    subgroup: string, 
+    instances: string[]
+};
+

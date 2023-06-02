@@ -1,4 +1,4 @@
-import List from "@mui/icons-material/List";
+import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -10,33 +10,37 @@ import { InstancesContext } from "~/entries/options";
 const InstanceList = (props: {instances?: string[]}) => {
     const instances = useContext(InstancesContext);
 
-    setTimeout(() => {
-        console.log("from list, instances:  ", instances) //works the first run, is undefined the second
-    },
-        1000
-    )
-
     return (
-        <List>
+        <List /* sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }} */>
             {
-                /* props. */instances?.map((domain: string) => 
-                    <ListItem key={domain}
-                        disablePadding
-                    >
-                        {/* <ListItemButton dense> */}
-                            {/* <ListItemIcon> */}
+                instances?.map((domain: string | undefined, index: number) => 
+                    <ListItem disablePadding key={index}>
+                        <ListItemButton dense>
+                            <ListItemIcon>
                                 <Checkbox edge="start"
                                     disableRipple
                                     checked={true}
                                 />
-                            {/* </ListItemIcon> */}
-                            <ListItemText primary={domain} />
-                        {/* </ListItemButton> */}
+                            </ListItemIcon>
+                            <ListItemText primary={domain? domain : "n/a"} />
+                        </ListItemButton>
                     </ListItem>
                 )
-            }
+            }                           
         </List>
     )
 }
 
 export default InstanceList;
+
+
+
+
+
+{/* <li>
+    <Checkbox edge="start"
+        disableRipple
+        checked={true}
+    />  
+    <p>{domain? domain : "n/a"}</p>                      
+</li>    */}             

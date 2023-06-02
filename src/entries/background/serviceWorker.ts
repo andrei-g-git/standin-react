@@ -78,21 +78,20 @@ publicInstances.forEach((group) => {
     })
 })
 
-const domainGroups = supportedDomains;
-
-// setTimeout(() => {
-//     console.log("SUPPORTED DOMAINS:   ", {domainGroups: domainGroups})
-//     //storeDataToStorage(browser, {foo: "bar"})
+setTimeout(() => {
+    const domainGroups = supportedDomains;
+    //console.log("SUPPORTED DOMAINS:   ", {domainGroups: supportedDomains})
+    //storeDataToStorage(browser, {foo: "bar"})
 
     browser.storage.local.set({domainGroups: domainGroups})
-// },
-//     3000
-// )
+},
+     3000
+)
 
 setTimeout(() => {
     getDataFromStorage(browser, ["domainGroups"])
         .then(data => {
-            console.log("stored data : \n", data)
+            //console.log("stored data : \n", data)
         })
     // browser.storage.local.get(["domainGroups"])
     //     .then(data => console.log("DATA: ", data))

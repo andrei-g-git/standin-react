@@ -12,7 +12,8 @@ export type {
     TedditInstance,
     Instance,
     OfficialDomain,
-    DomainGroup
+    DomainGroup,
+    InstanceGroup
 } from "./types/instances";
 
 export {

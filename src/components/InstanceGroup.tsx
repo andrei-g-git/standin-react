@@ -2,6 +2,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import { OfficialDomain } from "~/ts";
 import {InstanceList} from "~/components";
 import { useEffect } from "react";
@@ -19,13 +20,21 @@ const InstanceGroup = (props: {
 
     return (
         <Accordion>
-            <AccordionSummary>
-                <Typography variant="h6">
+            <AccordionSummary sx={{display: "flex", alignItems: "center", gap: "1rem"}}
+                expandIcon={<ExpandMore/>}
+            >
+                {/* <Typography variant="h6">
                     {props.title}
                 </Typography>
-                <Typography variant="subtitle2">
+                <Typography sx={{color: "text.secondary"}}>
                     {props.category}
-                </Typography>
+                </Typography> */}
+
+                <div style={{display: "flex", alignItems: "center", gap: "1rem", width: "100%"}}>
+                    <p style={{fontSize: "1rem"}}>{props.title}</p>
+                    <p style={{color: "gray"}}>{props.category}</p>
+                </div>
+
             </AccordionSummary>
             <AccordionDetails>
                 <InstanceList />

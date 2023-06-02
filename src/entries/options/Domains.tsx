@@ -1,53 +1,23 @@
 import { createContext, useEffect, useState } from "react";
-import { DomainGroup } from "~/ts";
+import { DomainGroup, OfficialDomain } from "~/ts";
 import { InstanceGroup } from "~/components";
-import { InstancesContext } from "~/entries/options";
-import browser from "webextension-polyfill";
-
-
-// const DomainGroupContext = createContext<DomainGroup>({
-//     group: "none",
-//     apis: [
-//         {
-//             api: "",
-//             instances: [
-//                 {
-//                     name: "",
-//                     url: "https://"
-//                 }
-//             ]
-//         }
-//     ]    
-// });
-
-//export const InstancesContext = createContext<string[]>([]);
+import { 
+    InstancesContext, 
+    useInstanceGroups
+} from "~/entries/options";
 
 const Domains = () => {
-    const [domainGroups, setDomainGroups] = useState<DomainGroup[] | undefined>([]);
-    useEffect(() => {
-        browser.storage.local.get("domainGroups")
-            .then(data => setDomainGroups(data.domainGroups))
-
-        setTimeout(() => {
-            console.log("domain groups from use Effect: ", domainGroups)
-        },
-            100
-        )
-    },
-        []
-    );   
-    
-    console.log("domain groups: ", domainGroups)
+    const instanceGroups = useInstanceGroups();
 
     return (
         <div>
             {
-                (domainGroups && domainGroups.length) && domainGroups.map((group: DomainGroup, index: number) => 
-                    <InstancesContext.Provider value={group.apis[index]?.instances.map(instance => instance.name)}>
-                        <InstanceGroup title={group.apis[index]?.api}
-                            category={group.group}
+                instanceGroups.map(item => 
+                    <InstancesContext.Provider value={item.instances}> 
+                        <InstanceGroup title={item.subgroup}
+                            category={item.group}
                         />
-                    </InstancesContext.Provider>    
+                    </InstancesContext.Provider>                     
                 )
             }
         </div>
