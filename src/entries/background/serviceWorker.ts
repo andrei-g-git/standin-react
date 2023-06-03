@@ -2,7 +2,7 @@ import "./main";
 
 
 //test
-import { publicInstances, fetchInstances, storeDataToStorage, getDataFromStorage} from "~/ts";
+import { publicInstances, fetchInstances, storeDataToStorage, getDataFromStorage, initialInstances} from "~/ts";
 import browser from "webextension-polyfill";
 
 let supportedDomains = [
@@ -14,11 +14,15 @@ let supportedDomains = [
                 instances: [
                     {
                         name: "youtube.com",
-                        url: "https:/youtube.com"
+                        url: "https:/youtube.com",
+                        using: true,
+                        selected: true
                     },
                     {
                         name: "youtu.be",
-                        ulr: "https://youtu.be"
+                        ulr: "https://youtu.be",
+                        using: true,
+                        selected: false
                     }
                 ]
             }
@@ -32,7 +36,9 @@ let supportedDomains = [
                 instances: [
                     {
                         name: "twitter.com",
-                        url: "https:/twitter.com"
+                        url: "https:/twitter.com",
+                        using: true,
+                        selected: true
                     }
                 ]
             }
@@ -46,13 +52,16 @@ let supportedDomains = [
                 instances: [
                     {
                         name: "reddit.com",
-                        url: "https:/reddit.com"
+                        url: "https:/reddit.com",
+                        using: true,
+                        selected: true
                     }
                 ]
             }
         ]
     }    
 ];
+
 
 publicInstances.forEach((group) => {
     group.apis.forEach(async (api) => {
@@ -67,10 +76,19 @@ publicInstances.forEach((group) => {
                 domainGroup.apis.push({
                     api: api.name,
                     instances: urls.map((url: string) => {
-                        return {
+                        let instance = {
                             name: url.replace("https://", "").replace("http://", ""),
-                            url: url
+                            url: url,
+                            using: false,
+                            selected: false
                         }
+                        const matching = initialInstances.find(instance => instance.url === url)
+                        if(matching){
+                            instance.using = true;
+                            instance.selected = matching.selected
+                        }
+                        
+                        return instance;
                     })
                 })
             }

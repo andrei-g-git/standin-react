@@ -7,4 +7,4 @@ export {
 
 export {
     useInstanceGroups
-} from "./hooks/storage";
+} from "./hooks/storage.hooks";

@@ -10,10 +10,13 @@ export type {
     NitterInstance,
     LibredditInstance,
     TedditInstance,
-    Instance,
+    InstanceApi,
     OfficialDomain,
+    ApiDomain,
     DomainGroup,
-    InstanceGroup
+    InstanceGroup,
+    Instance,
+    ListableInstance
 } from "./types/instances";
 
 export {
@@ -31,3 +34,7 @@ export {
     publicInstances,
     fetchInstances
 } from "./instanceApi";
+
+export {
+    initialInstances
+}from "./constants/instanceData";

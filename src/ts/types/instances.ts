@@ -59,24 +59,48 @@ export type TedditInstance = {
     notes?: string,
 }
 
-export type Instance = InvidiousInstance | PipedInstance | NitterInstance | LibredditInstance | TedditInstance;
+export type InstanceApi = InvidiousInstance | PipedInstance | NitterInstance | LibredditInstance | TedditInstance;
 
 export type OfficialDomain = "none" | "youtube" | "twitter" | "reddit" | "tiktok" | "medium" | "imgur";
+
+export type ApiDomain = "none" | "invidious" | "piped" | "nitter" | "teddit" | "libreddit" | "scribe" | "proxytok";
 
 export type DomainGroup = {
     group: OfficialDomain,
     apis: {
         api: string,
-        instances: {
-            name: string,
-            url: StartsWith<"https://"> | StartsWith<"http://">
-        }[]
+        // instances: {
+        //     name: string,
+        //     url: StartsWith<"https://"> | StartsWith<"http://">
+        // }[]
+        instances: Instance[]
     }[]
 }
 
 export type InstanceGroup = {
     group: OfficialDomain, 
     subgroup: string, 
-    instances: string[]
+    instances: {
+        name: string,
+        checked: boolean
+    }[]
 };
+
+export type Instance = {
+    name: string,
+    url: StartsWith<"https://"> | StartsWith<"http://">,
+    using: boolean,
+    selected: boolean
+}
+
+export type ListableInstance = {
+    name: string,
+    checked: boolean
+}
+
+// export type InitialInstance = {
+//     name: string,
+//     url: StartsWith<"https://"> | StartsWith<"http://">,
+//     selected: boolean
+// }
 

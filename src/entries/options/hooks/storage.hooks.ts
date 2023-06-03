@@ -23,7 +23,12 @@ const extractInstances = (domainGroups: DomainGroup[]): InstanceGroup[] => {
             instances.push({
                 group: group.group,
                 subgroup: api.api,
-                instances: api.instances.map(instance => instance.name)
+                instances: api.instances.map(instance => {
+                    return {
+                        name: instance.name,
+                        checked: instance.using
+                    }
+                })
             });
         })
     });
