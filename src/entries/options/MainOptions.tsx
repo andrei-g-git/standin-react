@@ -1,9 +1,18 @@
 import Container from "@mui/material/Container";
 import { LogoAndTitle } from "~/components";
 import styles from "./Options.module.scss";
-import {Domains} from "~/entries/options";
+import {Domains, useStoredDomains} from "~/entries/options";
+import { DomainsStructure, InstanceModel, initialDomainGroups } from "~/ts";
+import { useEffect, useState } from "react";
 
-const MainContainer = () => {
+const MainOptions = () => {
+    //const [model, setModel] = useState<DomainsStructure>(new InstanceModel(initialDomainGroups));
+    const model = useStoredDomains("domainGroups");
+    useEffect(() => {
+        console.log("model from MainOprions", model)
+    },
+        [model]
+    )
     return (
         <div className={styles["main-container"]}>
             <header className={styles["header"]}>
@@ -13,10 +22,10 @@ const MainContainer = () => {
             <Container className={styles["domains-container"]}
                 maxWidth="sm"
             >
-                <Domains />
+                <Domains model={model}/>
             </Container>
         </div>
     )
 }
 
-export default MainContainer
+export default MainOptions

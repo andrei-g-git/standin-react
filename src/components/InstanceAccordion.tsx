@@ -7,9 +7,10 @@ import { OfficialDomain } from "~/ts";
 import {InstanceList} from "~/components";
 import { useEffect } from "react";
 
-const InstanceGroup = (props: {
+const InstanceAccordion = (props: {
     title: string,
-    category: OfficialDomain
+    category: OfficialDomain,
+    index: number
 }) => {
     useEffect(() => {
         console.log("instance group loaded");
@@ -37,10 +38,10 @@ const InstanceGroup = (props: {
 
             </AccordionSummary>
             <AccordionDetails>
-                <InstanceList />
+                <InstanceList index={props.index}/>
             </AccordionDetails>
         </Accordion>
     )
 }
 
-export default InstanceGroup;
+export default InstanceAccordion;

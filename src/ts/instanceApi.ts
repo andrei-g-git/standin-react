@@ -11,7 +11,7 @@ import {
 
 import yaml from "js-yaml";
 
-export const publicInstances/* : GeneralInstance[] */ = [
+export const publicInstances: GeneralInstance[] = [
     {
         group: "youtube",
         apis: [

@@ -1,14 +1,21 @@
-import { ApiDomain, Instance, InstanceGroup, OfficialDomain } from "~/ts";
+import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain } from "~/ts";
 
-export interface Domains{
-    get Category(): OfficialDomain; //not actually domain, just name/handle
-    set Category(category: OfficialDomain);
+export interface DomainsStructure{
+    get DomainGroups(): DomainGroup[];
+    set DomainGroups(groups: DomainGroup[]);
 
-    get Api(): ApiDomain;
-    set Api(api: ApiDomain);
+    getCategory: (index: number) => OfficialDomain; //not actually domain, just name/handle
+    setCategory: (category: OfficialDomain, index: number) => void;
 
-    get Instances(): Instance[];
-    set Instances(instances: Instance[]);
+    getApi: (categoryIndex: number, apiIndex: number) => ApiDomain/* string */;
+    setApi: (api: ApiDomain/* string */, categoryIndex: number, apiIndex: number) => void;
 
-    storeDomainGroups: (domainGroups: InstanceGroup[]) => void;
+    getInstances: (categoryIndex: number, apiIndex: number) => Instance[];
+    setInstances: (instances: Instance[], categoryIndex: number, apiIndex: number) => void;
+
+    toggleInstanceUse: (category: OfficialDomain, api: ApiDomain, instanceIndex: number) => void;
+
+    toLocalStorage: () => void;
+
+    extractInstanceGroups: () => InstanceGroup[];
 }

@@ -1,4 +1,4 @@
-import { Instance } from "~/ts";
+import { DomainGroup, Instance } from "~/ts";
 
 export const initialInstances: Instance[] = [
     {
@@ -139,4 +139,62 @@ export const initialInstances: Instance[] = [
         using: true,
         selected: false,
     } 
-]
+];
+
+
+export const initialDomainGroups: DomainGroup[] = [
+    {
+        group: "youtube",
+        apis: [
+            {
+                api: "youtube",
+                instances: [
+                    {
+                        name: "youtube.com",
+                        url: "https://youtube.com",
+                        using: true,
+                        selected: true
+                    },
+                    {
+                        name: "youtu.be",
+                        url: "https://youtu.be",
+                        using: true,
+                        selected: false
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        group: "twitter",
+        apis: [
+            {
+                api: "twitter",
+                instances: [
+                    {
+                        name: "twitter.com",
+                        url: "https://twitter.com",
+                        using: true,
+                        selected: true
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        group: "reddit",
+        apis: [
+            {
+                api: "reddit",
+                instances: [
+                    {
+                        name: "reddit.com",
+                        url: "https://reddit.com",
+                        using: true,
+                        selected: true
+                    }
+                ]
+            }
+        ]
+    }    
+];

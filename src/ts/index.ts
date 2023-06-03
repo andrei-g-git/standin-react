@@ -36,5 +36,14 @@ export {
 } from "./instanceApi";
 
 export {
-    initialInstances
+    initialInstances,
+    initialDomainGroups
 }from "./constants/instanceData";
+
+export type {
+    DomainsStructure
+} from "./types/model.interface";
+
+export {
+    InstanceModel
+} from "./model/InstanceModel";

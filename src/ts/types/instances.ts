@@ -7,17 +7,17 @@
 //         }        
 //     }
 
-import { StartsWith } from "./strings";
+import { EndsWith, StartsWith } from "./strings";
 
 // }
 
 export type GeneralInstance = {
-    group: "string",
+    group: string,
     apis: {
-        name: string,
+        name: ApiDomain,//string,
         api: string,
         format: number,
-        getUrls: (instanceData: any) => string[];
+        getUrls: (instanceData: any) => (StartsWith<"https://"> | StartsWith<"http://">)[];//string[];
     }[]           
 }
 
@@ -28,7 +28,7 @@ export type InvidiousInstance = [
 
 export type PipedInstance = {
     name: string
-    api_url: string
+    api_url: StartsWith<"https://"> | StartsWith<"http://">,//string
     locations: string
     version: string
     up_to_date: boolean,
@@ -41,19 +41,19 @@ export type PipedInstance = {
 
 export type NitterInstance = {
     name: string,
-    url: string,
+    url: StartsWith<"https://"> | StartsWith<"http://">,//string,
     icon: string,
 }
 
 export type LibredditInstance = {
-    url: string,
+    url: StartsWith<"https://"> | StartsWith<"http://">,//string,
     country: string,
     version: string,
     description: string,
 }
 
 export type TedditInstance = {
-    url: string,
+    url: StartsWith<"https://"> | StartsWith<"http://">, //string,
     onion?: string,
     i2p?: string,
     notes?: string,
@@ -63,12 +63,12 @@ export type InstanceApi = InvidiousInstance | PipedInstance | NitterInstance | L
 
 export type OfficialDomain = "none" | "youtube" | "twitter" | "reddit" | "tiktok" | "medium" | "imgur";
 
-export type ApiDomain = "none" | "invidious" | "piped" | "nitter" | "teddit" | "libreddit" | "scribe" | "proxytok";
+export type ApiDomain = "none" | "youtube" | "twitter" | "reddit" | "tiktok" | "medium" | "imgur" | "invidious" | "piped" | "nitter" | "teddit" | "libreddit" | "scribe" | "proxytok";
 
 export type DomainGroup = {
     group: OfficialDomain,
     apis: {
-        api: string,
+        api: ApiDomain,//string,
         // instances: {
         //     name: string,
         //     url: StartsWith<"https://"> | StartsWith<"http://">
@@ -79,7 +79,7 @@ export type DomainGroup = {
 
 export type InstanceGroup = {
     group: OfficialDomain, 
-    subgroup: string, 
+    subgroup: ApiDomain, //string, 
     instances: {
         name: string,
         checked: boolean

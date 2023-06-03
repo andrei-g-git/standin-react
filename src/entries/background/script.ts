@@ -17,7 +17,7 @@ let supportedDomains = [
                     },
                     {
                         name: "youtu.be",
-                        ulr: "https://youtu.be"
+                        url: "https://youtu.be"
                     }
                 ]
             }

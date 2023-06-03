@@ -2,65 +2,65 @@ import "./main";
 
 
 //test
-import { publicInstances, fetchInstances, storeDataToStorage, getDataFromStorage, initialInstances} from "~/ts";
+import { publicInstances, fetchInstances, storeDataToStorage, getDataFromStorage, initialInstances, initialDomainGroups, StartsWith} from "~/ts";
 import browser from "webextension-polyfill";
 
-let supportedDomains = [
-    {
-        group: "youtube",
-        apis: [
-            {
-                api: "youtube",
-                instances: [
-                    {
-                        name: "youtube.com",
-                        url: "https:/youtube.com",
-                        using: true,
-                        selected: true
-                    },
-                    {
-                        name: "youtu.be",
-                        ulr: "https://youtu.be",
-                        using: true,
-                        selected: false
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        group: "twitter",
-        apis: [
-            {
-                api: "twitter",
-                instances: [
-                    {
-                        name: "twitter.com",
-                        url: "https:/twitter.com",
-                        using: true,
-                        selected: true
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        group: "reddit",
-        apis: [
-            {
-                api: "reddit",
-                instances: [
-                    {
-                        name: "reddit.com",
-                        url: "https:/reddit.com",
-                        using: true,
-                        selected: true
-                    }
-                ]
-            }
-        ]
-    }    
-];
+let supportedDomains = initialDomainGroups;//[
+//     {
+//         group: "youtube",
+//         apis: [
+//             {
+//                 api: "youtube",
+//                 instances: [
+//                     {
+//                         name: "youtube.com",
+//                         url: "https:/youtube.com",
+//                         using: true,
+//                         selected: true
+//                     },
+//                     {
+//                         name: "youtu.be",
+//                         ulr: "https://youtu.be",
+//                         using: true,
+//                         selected: false
+//                     }
+//                 ]
+//             }
+//         ]
+//     },
+//     {
+//         group: "twitter",
+//         apis: [
+//             {
+//                 api: "twitter",
+//                 instances: [
+//                     {
+//                         name: "twitter.com",
+//                         url: "https:/twitter.com",
+//                         using: true,
+//                         selected: true
+//                     }
+//                 ]
+//             }
+//         ]
+//     },
+//     {
+//         group: "reddit",
+//         apis: [
+//             {
+//                 api: "reddit",
+//                 instances: [
+//                     {
+//                         name: "reddit.com",
+//                         url: "https:/reddit.com",
+//                         using: true,
+//                         selected: true
+//                     }
+//                 ]
+//             }
+//         ]
+//     }    
+// ];
 
 
 publicInstances.forEach((group) => {
@@ -75,7 +75,7 @@ publicInstances.forEach((group) => {
             if(domainGroup.group === group.group){
                 domainGroup.apis.push({
                     api: api.name,
-                    instances: urls.map((url: string) => {
+                    instances: urls.map((url: StartsWith<"https://"> | StartsWith<"http://">) => {
                         let instance = {
                             name: url.replace("https://", "").replace("http://", ""),
                             url: url,
