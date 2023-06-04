@@ -1,5 +1,5 @@
-import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain } from "../types/instances";
-import { DomainsStructure } from "~/ts";
+//import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain } from "../types/instances";
+import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, DomainsStructure, StandinGroup, StartsWith, initialDomainGroups, initialInstances } from "~/ts";
 import browser from "webextension-polyfill";
 
 export class InstanceModel implements DomainsStructure{
@@ -74,6 +74,54 @@ export class InstanceModel implements DomainsStructure{
             })
         });
         return instances;        
+    }
+
+    extractStandinData = () => {
+        let standins: StandinGroup[] = [];
+        this.domainGroups.forEach((group: DomainGroup) => {
+            let selected: string = group.group;/* initialInstances.find(instance => (instance.name === group.group && instance.selected))!.name; */ //should just be group.group since it's just an initialization...
+            //console.log("SELECTED: ", selected) //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            const instances:{
+                name: string,
+                url: StartsWith<"https://"> | StartsWith<"http://">
+            }[] = [];
+            group.apis.forEach(api => {
+                instances.push(
+                    ...api.instances //careful -- spread
+                        .filter(instance => instance.using)
+                        .map(used => {
+                            return {
+                                name: used.name,
+                                url: used.url
+                            }
+                        })
+                );
+
+                const matching = api.instances.find(instance => instance.selected)?.name;
+                if(matching) selected = matching;
+            })
+            standins.push({
+                group: group.group,
+                selected: selected,
+                instances: instances
+            });            
+        });
+        return standins;           
+    }
+
+    static createNew = (storageKey: string | Record<string, any> | string[] | null | undefined): Promise<DomainsStructure> => {
+        const newModel = new InstanceModel(initialDomainGroups);
+        return new Promise((resolve, reject) => {
+            browser.storage.local.get(storageKey)
+                .then(data => {
+                    newModel.DomainGroups = data.domainGroups;
+                    if (browser.runtime.lastError) {
+                        return reject(browser.runtime.lastError);
+                    }                    
+                    resolve(newModel);
+                })               
+        })
+
     }
 
 }

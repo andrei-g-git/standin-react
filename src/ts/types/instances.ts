@@ -98,9 +98,23 @@ export type ListableInstance = {
     checked: boolean
 }
 
-// export type InitialInstance = {
-//     name: string,
-//     url: StartsWith<"https://"> | StartsWith<"http://">,
-//     selected: boolean
-// }
+export type StandinGroup = {
+    group: OfficialDomain,
+    selected: string,
+    instances: {
+        name: string,
+        url: StartsWith<"https://"> | StartsWith<"http://">
+    }[]
+}
+
+export type NameGroup = {
+    group: OfficialDomain,
+    selected: string,
+    instances: {
+        name: string,
+        url: StartsWith<"https://"> | StartsWith<"http://">
+    }[]
+}
+
+export type ValidUrl = StartsWith<"https://"> | StartsWith<"http://">;
 

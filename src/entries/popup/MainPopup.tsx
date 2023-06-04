@@ -1,12 +1,11 @@
 import Container from "@mui/material/Container";
 import List from "@mui/material/List";
 import { Logo } from "~/components";
-import styles from "./MainContainer.module.scss";
-import Box from "@mui/material/Box";
 import {ToggledRedirector} from "~/components";
 import { StyledEngineProvider, ThemeProvider } from "@mui/material/styles";
 import { lightTheme } from "~/ts";
-import {ToggleGroupLegend} from "~/entries/popup";
+import {Standins, ToggleGroupLegend} from "~/entries/popup";
+import styles from "./MainPopup.module.scss";
 
 const MainContainer = () => {
     return (
@@ -18,15 +17,15 @@ const MainContainer = () => {
                         <h5>Standin Redirect</h5>
                     </header>
                     <Container disableGutters sx={{position: "relative"}}>
-                        <List>
+{/*                         <List>
                             <ToggledRedirector />
                             <ToggledRedirector />
                             <ToggledRedirector />
                             <ToggledRedirector />
                             <ToggledRedirector />
                             <ToggledRedirector />
-                        </List>
-
+                        </List> */}
+                            <Standins Standin={ToggledRedirector}/>
                         <ToggleGroupLegend />
                     </Container>
 

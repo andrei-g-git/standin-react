@@ -1,6 +1,8 @@
 import "./main";
 
 
+//this doesn't run on install yet, it probably runs on every options page mount
+
 //test
 import { publicInstances, fetchInstances, storeDataToStorage, getDataFromStorage, initialInstances, initialDomainGroups, StartsWith} from "~/ts";
 import browser from "webextension-polyfill";
@@ -98,8 +100,7 @@ publicInstances.forEach((group) => {
 
 setTimeout(() => {
     const domainGroups = supportedDomains;
-    //console.log("SUPPORTED DOMAINS:   ", {domainGroups: supportedDomains})
-    //storeDataToStorage(browser, {foo: "bar"})
+
 
     browser.storage.local.set({domainGroups: domainGroups})
 },

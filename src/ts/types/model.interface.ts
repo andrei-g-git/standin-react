@@ -1,4 +1,4 @@
-import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain } from "~/ts";
+import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, StandinGroup } from "~/ts";
 
 export interface DomainsStructure{
     get DomainGroups(): DomainGroup[];
@@ -18,4 +18,6 @@ export interface DomainsStructure{
     toLocalStorage: () => void;
 
     extractInstanceGroups: () => InstanceGroup[];
+
+    extractStandinData: () => StandinGroup[];
 }

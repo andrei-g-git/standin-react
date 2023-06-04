@@ -1,10 +1,10 @@
-import { MainContainer } from "~/entries/popup";
+import { MainPopup } from "~/entries/popup";
 import "./App.css";
 
 function App() {
 	return (
 		<main>
-			<MainContainer />
+			<MainPopup />
 		</main>
 	);
 }

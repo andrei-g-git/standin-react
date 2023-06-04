@@ -16,7 +16,10 @@ export type {
     DomainGroup,
     InstanceGroup,
     Instance,
-    ListableInstance
+    ListableInstance,
+    StandinGroup,
+    NameGroup,
+    ValidUrl
 } from "./types/instances";
 
 export {
@@ -47,3 +50,7 @@ export type {
 export {
     InstanceModel
 } from "./model/InstanceModel";
+
+export {
+    capitalizeFirst
+} from "./utils/conversions";

@@ -9,9 +9,14 @@ import Switch from "@mui/material/Switch";
 import { YoutubeStandin } from "~/components";
 import { useState } from "react";
 import styles from "./ToggleRedirector.module.scss";
+import { OfficialDomain, capitalizeFirst } from "~/ts";
 
-const ToggledRedirector = () => {
-    const [test, setTest] = useState("1");
+const ToggledRedirector = (props: {
+    group: OfficialDomain,
+    selected: string,
+    instances: string[]
+}) => {
+    const [selected, setSelected] = useState(props.selected);
 
     return (
         <ListItem sx={{width: "250px", paddingInlineStart: 0}}>
@@ -22,15 +27,22 @@ const ToggledRedirector = () => {
             >
 
                 <FormControl fullWidth>
-                    <InputLabel>Youtube</InputLabel>
+                    <InputLabel>{capitalizeFirst(props.group)}</InputLabel>
                     <Select className={styles["square-border-right"]}
-                        label="Youtube"
-                        value={test}
-                        onChange={(event: SelectChangeEvent) => setTest(event.target.value)}
+                        label={capitalizeFirst(props.group)}
+                        value={selected}
+                        onChange={(event: SelectChangeEvent) => setSelected(event.target.value)}
                     >
-                        <MenuItem value="1">Foo</MenuItem>
+                        {/* <MenuItem value="1">Foo</MenuItem>
                         <MenuItem value="2">Barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</MenuItem>
-                        <MenuItem value="3">Balls</MenuItem>
+                        <MenuItem value="3">Balls</MenuItem> */}
+                        {
+                            props.instances.map(instance =>
+                                <MenuItem value={instance}>
+                                    {instance}
+                                </MenuItem>    
+                            )
+                        }
                     </Select>                    
                 </FormControl>
 
