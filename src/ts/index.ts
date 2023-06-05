@@ -18,7 +18,7 @@ export type {
     Instance,
     ListableInstance,
     StandinGroup,
-    NameGroup,
+    //NameGroup,
     ValidUrl
 } from "./types/instances";
 
@@ -33,10 +33,10 @@ export {
     storeDataToStorage
 } from "./storage";
 
-export {
-    publicInstances,
-    fetchInstances
-} from "./instanceApi";
+// export {
+//     publicInstances,
+//     fetchInstances
+// } from "./instanceApi";
 
 export {
     initialInstances,

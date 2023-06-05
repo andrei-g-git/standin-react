@@ -2,11 +2,9 @@ import Container from "@mui/material/Container";
 import { LogoAndTitle } from "~/components";
 import styles from "./Options.module.scss";
 import {Domains, useStoredDomains} from "~/entries/options";
-import { DomainsStructure, InstanceModel, initialDomainGroups } from "~/ts";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const MainOptions = () => {
-    //const [model, setModel] = useState<DomainsStructure>(new InstanceModel(initialDomainGroups));
     const model = useStoredDomains("domainGroups");
     useEffect(() => {
         console.log("model from MainOprions", model)

@@ -1,6 +1,7 @@
 //import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain } from "../types/instances";
 import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, DomainsStructure, StandinGroup, StartsWith, initialDomainGroups, initialInstances } from "~/ts";
 import browser from "webextension-polyfill";
+import { Redirector, ValidUrl } from "../types/instances";
 
 export class InstanceModel implements DomainsStructure{
     constructor(private domainGroups: DomainGroup[]){}
@@ -41,8 +42,6 @@ export class InstanceModel implements DomainsStructure{
 
     toLocalStorage = () => {
         browser.storage.local.set({domainGroups: this.domainGroups})
-
-        browser.storage.local.set({fuck: "me"})
     }
     
     toggleInstanceUse = (category: OfficialDomain, apiName: ApiDomain, index: number) => {
@@ -102,11 +101,54 @@ export class InstanceModel implements DomainsStructure{
             })
             standins.push({
                 group: group.group,
+                redirecting: group.redirecting,
                 selected: selected,
                 instances: instances
             });            
         });
         return standins;           
+    }
+
+    setSelected = (selected: string, redirecting: boolean, index: number) => {
+        const domainGroup = this.domainGroups[index];
+        domainGroup.redirecting = redirecting;
+        domainGroup.apis.forEach(api => {
+            api.instances.forEach((instance => {
+                instance.name === selected?
+                    instance.selected = true
+                :
+                    instance.selected = false;
+            }))
+        })
+
+    }
+
+    storeRedirectors = () => {
+        const redirectors: Redirector[] = [];
+        this.domainGroups.forEach(group => {
+            let target: ValidUrl = initialInstances.find(instance => instance.name === group.group)?.url || "https://nope.zip";
+            // const target = group.apis
+            //     .filter(api => api.instances.find(instance => instance.selected))[0]
+            //     .
+            group.apis.forEach(api => { //crap...
+                api.instances.forEach(instance => {
+                    instance.selected && (target = instance.url);
+                })
+            })
+            group.apis.forEach(api => {
+                api.instances.forEach(instance => {
+                    if(instance.selected) target = instance.url;
+                    const source: ValidUrl = instance.url;
+                    redirectors.push({
+                        source: source,
+                        target: group.redirecting? target : source,
+                        //redirecting: group.redirecting
+                    })
+                })
+            })
+        })
+
+        browser.storage.local.set({redirects: redirectors});
     }
 
     static createNew = (storageKey: string | Record<string, any> | string[] | null | undefined): Promise<DomainsStructure> => {

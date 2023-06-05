@@ -13,14 +13,25 @@ import { OfficialDomain, capitalizeFirst } from "~/ts";
 
 const ToggledRedirector = (props: {
     group: OfficialDomain,
+    redirecting: boolean,
     selected: string,
-    instances: string[]
+    instances: string[],
+    index: number,
+    notify: (selected: string, redirecting: boolean, index: number) => void
 }) => {
     const [selected, setSelected] = useState(props.selected);
+    const [checked, setChecked] = useState(props.redirecting);
 
     return (
         <ListItem sx={{width: "250px", paddingInlineStart: 0}}>
-            <Switch sx={{marginRight: "15%"}}/>
+            <Switch sx={{marginRight: "15%"}}
+                onChange={handleSwitch(
+                    selected,
+                    props.index,
+                    setChecked,
+                    props.notify
+                )}
+            />
             <ButtonGroup variant="contained" 
                 fullWidth 
                 disableRipple //and do it on children components too
@@ -31,11 +42,13 @@ const ToggledRedirector = (props: {
                     <Select className={styles["square-border-right"]}
                         label={capitalizeFirst(props.group)}
                         value={selected}
-                        onChange={(event: SelectChangeEvent) => setSelected(event.target.value)}
+                        onChange={handleSelect(
+                            checked,
+                            props.index,
+                            setSelected,
+                            props.notify
+                        )}
                     >
-                        {/* <MenuItem value="1">Foo</MenuItem>
-                        <MenuItem value="2">Barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</MenuItem>
-                        <MenuItem value="3">Balls</MenuItem> */}
                         {
                             props.instances.map(instance =>
                                 <MenuItem value={instance}>
@@ -58,4 +71,28 @@ const ToggledRedirector = (props: {
     )
 }
 
-export default ToggledRedirector
+const handleSwitch = (
+    selected: string, 
+    index: number,    
+    setChecked: React.Dispatch<React.SetStateAction<boolean>>,//(value: React.SetStateAction<boolean>) => void,
+    notify: (selected: string, redirecting: boolean, index: number) => void 
+) => {
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+        notify(selected, event.target.checked, index);
+    }
+} 
+
+const handleSelect = (
+    checked: boolean,
+    index: number,
+    setSelected: React.Dispatch<React.SetStateAction<string>>,
+    notify: (selected: string, redirecting: boolean, index: number) => void
+) => {
+    return (event: SelectChangeEvent<string>) => {
+        setSelected(event.target.value);
+        notify(event.target.value, checked, index);
+    }
+}
+
+export default ToggledRedirector;

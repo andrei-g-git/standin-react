@@ -3,7 +3,7 @@ import List from '@mui/material/List';
 import React from 'react';
 import {ToggleGroupLegend} from '~/entries/popup';
 import { useLoadModel, useStandinData } from './hooks/storage.hooks';
-import { StandinGroup } from '~/ts';
+import { DomainsStructure, StandinGroup } from '~/ts';
 
 const Standins = (props: {Standin: React.FunctionComponent<any>}) => {
     const model = useLoadModel("domainGroups");
@@ -12,17 +12,14 @@ const Standins = (props: {Standin: React.FunctionComponent<any>}) => {
     return (
         <Container disableGutters sx={{position: "relative"}}>
             <List>
-                {/* <props.Standin />
-                <props.Standin />
-                <props.Standin />
-                <props.Standin />
-                <props.Standin />
-                <props.Standin /> */}
                 {
-                    standinGroups?.map(standinData => 
-                        <props.Standin group={standinData.group}
+                    standinGroups?.map((standinData, index: number) => 
+                        <props.Standin index={index}
+                            group={standinData.group}
+                            redirecting={standinData.redirecting}
                             selected={standinData.selected}
                             instances={standinData.instances.map(instance => instance.name)}
+                            notify={storeStandinAction(model)}
                         />   
                     )
                 }
@@ -31,6 +28,14 @@ const Standins = (props: {Standin: React.FunctionComponent<any>}) => {
             <ToggleGroupLegend />
         </Container>
     )
+}
+
+const storeStandinAction = (model: DomainsStructure) => {
+    return (selected: string, checked: boolean, index: number) => {
+        model.setSelected(selected, checked, index);
+        model.toLocalStorage();
+        model.storeRedirectors();
+    }
 }
 
 export default Standins;

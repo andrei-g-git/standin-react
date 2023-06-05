@@ -20,4 +20,8 @@ export interface DomainsStructure{
     extractInstanceGroups: () => InstanceGroup[];
 
     extractStandinData: () => StandinGroup[];
+
+    setSelected: (selected: string, redirecting: boolean, groupIndex: number) => void;
+
+    storeRedirectors: () => void;
 }

@@ -17,15 +17,9 @@ const MainContainer = () => {
                         <h5>Standin Redirect</h5>
                     </header>
                     <Container disableGutters sx={{position: "relative"}}>
-{/*                         <List>
-                            <ToggledRedirector />
-                            <ToggledRedirector />
-                            <ToggledRedirector />
-                            <ToggledRedirector />
-                            <ToggledRedirector />
-                            <ToggledRedirector />
-                        </List> */}
-                            <Standins Standin={ToggledRedirector}/>
+                        
+                        <Standins Standin={ToggledRedirector}/>
+
                         <ToggleGroupLegend />
                     </Container>
 

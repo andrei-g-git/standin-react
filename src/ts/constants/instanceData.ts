@@ -145,6 +145,7 @@ export const initialInstances: Instance[] = [
 export const initialDomainGroups: DomainGroup[] = [
     {
         group: "youtube",
+        redirecting: false,
         apis: [
             {
                 api: "youtube",
@@ -167,6 +168,7 @@ export const initialDomainGroups: DomainGroup[] = [
     },
     {
         group: "twitter",
+        redirecting: false,
         apis: [
             {
                 api: "twitter",
@@ -183,6 +185,7 @@ export const initialDomainGroups: DomainGroup[] = [
     },
     {
         group: "reddit",
+        redirecting: false,
         apis: [
             {
                 api: "reddit",

@@ -67,19 +67,16 @@ export type ApiDomain = "none" | "youtube" | "twitter" | "reddit" | "tiktok" | "
 
 export type DomainGroup = {
     group: OfficialDomain,
+    redirecting: boolean,
     apis: {
-        api: ApiDomain,//string,
-        // instances: {
-        //     name: string,
-        //     url: StartsWith<"https://"> | StartsWith<"http://">
-        // }[]
+        api: ApiDomain,
         instances: Instance[]
     }[]
 }
 
 export type InstanceGroup = {
     group: OfficialDomain, 
-    subgroup: ApiDomain, //string, 
+    subgroup: ApiDomain,
     instances: {
         name: string,
         checked: boolean
@@ -100,6 +97,7 @@ export type ListableInstance = {
 
 export type StandinGroup = {
     group: OfficialDomain,
+    redirecting: boolean,
     selected: string,
     instances: {
         name: string,
@@ -107,13 +105,21 @@ export type StandinGroup = {
     }[]
 }
 
-export type NameGroup = {
-    group: OfficialDomain,
-    selected: string,
-    instances: {
-        name: string,
-        url: StartsWith<"https://"> | StartsWith<"http://">
-    }[]
+// export type NameGroup = {
+//     group: OfficialDomain,
+//     selected: string,
+//     instances: {
+//         name: string,
+//         url: StartsWith<"https://"> | StartsWith<"http://">
+//     }[]
+// }
+
+export type Redirector = {
+    // official: OfficialDomain, //these should be urls
+    // replacer: string
+    source: ValidUrl,
+    target: ValidUrl,
+    //redirecting: boolean
 }
 
 export type ValidUrl = StartsWith<"https://"> | StartsWith<"http://">;
