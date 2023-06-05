@@ -78,8 +78,7 @@ export class InstanceModel implements DomainsStructure{
     extractStandinData = () => {
         let standins: StandinGroup[] = [];
         this.domainGroups.forEach((group: DomainGroup) => {
-            let selected: string = group.group;/* initialInstances.find(instance => (instance.name === group.group && instance.selected))!.name; */ //should just be group.group since it's just an initialization...
-            //console.log("SELECTED: ", selected) //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            let selected: string = group.group;
             const instances:{
                 name: string,
                 url: StartsWith<"https://"> | StartsWith<"http://">
@@ -127,9 +126,6 @@ export class InstanceModel implements DomainsStructure{
         const redirectors: Redirector[] = [];
         this.domainGroups.forEach(group => {
             let target: ValidUrl = initialInstances.find(instance => instance.name === group.group)?.url || "https://nope.zip";
-            // const target = group.apis
-            //     .filter(api => api.instances.find(instance => instance.selected))[0]
-            //     .
             group.apis.forEach(api => { //crap...
                 api.instances.forEach(instance => {
                     instance.selected && (target = instance.url);
@@ -142,7 +138,6 @@ export class InstanceModel implements DomainsStructure{
                     redirectors.push({
                         source: source,
                         target: group.redirecting? target : source,
-                        //redirecting: group.redirecting
                     })
                 })
             })

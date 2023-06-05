@@ -25,6 +25,7 @@ const ToggledRedirector = (props: {
     return (
         <ListItem sx={{width: "250px", paddingInlineStart: 0}}>
             <Switch sx={{marginRight: "15%"}}
+                checked={checked}
                 onChange={handleSwitch(
                     selected,
                     props.index,
@@ -74,7 +75,7 @@ const ToggledRedirector = (props: {
 const handleSwitch = (
     selected: string, 
     index: number,    
-    setChecked: React.Dispatch<React.SetStateAction<boolean>>,//(value: React.SetStateAction<boolean>) => void,
+    setChecked: React.Dispatch<React.SetStateAction<boolean>>,
     notify: (selected: string, redirecting: boolean, index: number) => void 
 ) => {
     return (event: React.ChangeEvent<HTMLInputElement>) => {

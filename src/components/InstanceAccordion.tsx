@@ -24,13 +24,6 @@ const InstanceAccordion = (props: {
             <AccordionSummary sx={{display: "flex", alignItems: "center", gap: "1rem"}}
                 expandIcon={<ExpandMore/>}
             >
-                {/* <Typography variant="h6">
-                    {props.title}
-                </Typography>
-                <Typography sx={{color: "text.secondary"}}>
-                    {props.category}
-                </Typography> */}
-
                 <div style={{display: "flex", alignItems: "center", gap: "1rem", width: "100%"}}>
                     <p style={{fontSize: "1rem"}}>{props.title}</p>
                     <p style={{color: "gray"}}>{props.category}</p>
