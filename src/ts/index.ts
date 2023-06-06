@@ -19,7 +19,8 @@ export type {
     ListableInstance,
     StandinGroup,
     //NameGroup,
-    ValidUrl
+    ValidUrl,
+    Redirector
 } from "./types/instances";
 
 export {
@@ -54,3 +55,15 @@ export {
 export {
     capitalizeFirst
 } from "./utils/conversions";
+
+export {
+    DOMAIN_GROUPS,
+    REDIRECTS
+} from "./constants/keys";
+
+export type {
+    StorageKey
+} from "./types/browser";
+
+export {Messages} from "./constants/messages";
+export {BrowserMessages} from "./BrowserMessages";

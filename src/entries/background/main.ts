@@ -1,10 +1,23 @@
 import browser from "webextension-polyfill";
 	//test
-	import { getDataFromStorage, initialInstances, initialDomainGroups, StartsWith} from "~/ts";
-	import {publicInstances, fetchInstances, } from "~/entries/background";
+	import { getDataFromStorage, initialInstances, initialDomainGroups, StartsWith, Redirector, BrowserMessages, REDIRECTS} from "~/ts";
+	import {publicInstances, fetchInstances, loadRedirects, interceptLinkClick, } from "~/entries/background";
 
 browser.runtime.onInstalled.addListener(() => {
 	console.log("Extension installed");
+
+
+
+
+	let redirects: Redirector[] = [];
+	loadRedirects(REDIRECTS) 
+		.then(redirectData => {
+			console.log("REDIRECT DATA: ", redirectData)
+			redirects = redirectData as unknown as Redirector[];
+		});
+	BrowserMessages.listenInstanceChange(loadRedirects, REDIRECTS);
+	document.addEventListener("click", interceptLinkClick(redirects));
+
 
 
 	//test

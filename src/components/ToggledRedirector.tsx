@@ -23,8 +23,8 @@ const ToggledRedirector = (props: {
     const [checked, setChecked] = useState(props.redirecting);
 
     return (
-        <ListItem sx={{width: "250px", paddingInlineStart: 0}}>
-            <Switch sx={{marginRight: "15%"}}
+        <ListItem sx={{/* height: "3rem", */ paddingInlineStart: 0/* , paddingTop: 0, paddingBottom: 0 */}}>
+            <Switch sx={{marginRight: "10%"}}
                 checked={checked}
                 onChange={handleSwitch(
                     selected,
@@ -33,12 +33,16 @@ const ToggledRedirector = (props: {
                     props.notify
                 )}
             />
-            <ButtonGroup variant="contained" 
-                fullWidth 
+            <ButtonGroup sx={{width: "180px", maxWidth: "180px", minWidth: "180px"/* , paddingInlineStart: 0 */}}
+                variant="contained" 
+                //fullWidth 
                 disableRipple //and do it on children components too
+                size="small"
             >
 
-                <FormControl fullWidth>
+                <FormControl fullWidth
+                    //size="small"
+                >
                     <InputLabel>{capitalizeFirst(props.group)}</InputLabel>
                     <Select className={styles["square-border-right"]}
                         label={capitalizeFirst(props.group)}
@@ -63,7 +67,7 @@ const ToggledRedirector = (props: {
                 <Button className={styles["square-border-left"]}
                     variant="outlined"
                     endIcon={<YoutubeStandin width="100%" height="100%" />}
-                    size="large"
+                    //size="small"
                     fullWidth
                 />
             </ButtonGroup>        

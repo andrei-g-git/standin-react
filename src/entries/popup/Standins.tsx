@@ -3,7 +3,7 @@ import List from '@mui/material/List';
 import React from 'react';
 import {ToggleGroupLegend} from '~/entries/popup';
 import { useLoadModel, useStandinData } from './hooks/storage.hooks';
-import { DomainsStructure, StandinGroup } from '~/ts';
+import { BrowserMessages, DomainsStructure, StandinGroup } from '~/ts';
 
 const Standins = (props: {Standin: React.FunctionComponent<any>}) => {
     const model = useLoadModel("domainGroups");
@@ -35,6 +35,7 @@ const storeStandinAction = (model: DomainsStructure) => {
         model.setSelected(selected, checked, index);
         model.toLocalStorage();
         model.storeRedirectors();
+        BrowserMessages.instancesChanged();
     }
 }
 

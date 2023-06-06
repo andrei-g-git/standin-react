@@ -1,8 +1,8 @@
 import Container from "@mui/material/Container";
 import { LogoAndTitle } from "~/components";
-import styles from "./Options.module.scss";
 import {Domains, useStoredDomains} from "~/entries/options";
 import { useEffect } from "react";
+import styles from "./Options.module.scss";
 
 const MainOptions = () => {
     const model = useStoredDomains("domainGroups");

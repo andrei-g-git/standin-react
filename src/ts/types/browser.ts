@@ -1,0 +1,1 @@
+export type StorageKey = string | Record<string, any> | string[] | null | undefined;
