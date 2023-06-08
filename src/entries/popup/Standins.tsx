@@ -35,7 +35,8 @@ const storeStandinAction = (model: DomainsStructure) => {
         model.setSelected(selected, checked, index);
         model.toLocalStorage();
         model.storeRedirectors();
-        BrowserMessages.instancesChanged();
+        //BrowserMessages.instancesChanged();
+        BrowserMessages.redirectsChanged();
     }
 }
 

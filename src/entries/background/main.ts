@@ -1,4 +1,5 @@
 import browser from "webextension-polyfill";
+
 	//test
 	import { getDataFromStorage, initialInstances, initialDomainGroups, StartsWith, Redirector, BrowserMessages, REDIRECTS} from "~/ts";
 	import {publicInstances, fetchInstances, loadRedirects, interceptLinkClick, } from "~/entries/background";
@@ -16,7 +17,8 @@ browser.runtime.onInstalled.addListener(() => {
 			redirects = redirectData as unknown as Redirector[];
 		});
 	BrowserMessages.listenInstanceChange(loadRedirects, REDIRECTS);
-	document.addEventListener("click", interceptLinkClick(redirects));
+	// document.addEventListener("click", interceptLinkClick(redirects));
+	BrowserMessages.onTabChange(redirects);
 
 
 

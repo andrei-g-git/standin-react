@@ -23,7 +23,11 @@ const sharedManifest = {
 		page: "src/entries/options/index.html",
 		open_in_tab: true,
 	},
-	permissions: [],
+	permissions: [
+		"storage",
+		"tabs",
+		"activeTabs"
+	],
 };
 
 const browserAction = {
@@ -75,13 +79,13 @@ export function getManifest(manifestVersion: number): chrome.runtime.ManifestV2 
 		};
 	}
 
-	if (manifestVersion === 3) {
-		return {
-			...manifest,
-			...ManifestV3,
-			manifest_version: manifestVersion,
-		};
-	}
+	// if (manifestVersion === 3) {   //my commenting
+	// 	return {
+	// 		...manifest,
+	// 		...ManifestV3,
+	// 		manifest_version: manifestVersion,
+	// 	};
+	// }
 
 	throw new Error(
 		`Missing manifest definition for manifestVersion ${manifestVersion}`
