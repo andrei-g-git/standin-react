@@ -41,8 +41,10 @@ export class BrowserMessages{
     }
 
     static onTabChange = (messageOrData: Redirector[] | string) => {
+        console.log("messageOrData on listener add:  ", messageOrData)
         browser.tabs.onUpdated.addListener(
             (tabId: number, changeInfo: browser.Tabs.OnUpdatedChangeInfoType, tab) => {
+                console.log(`tab ${tabId} changed, sendig data\n:  ${messageOrData}`)
                 if(changeInfo.url){
                     browser.tabs.sendMessage(
                         tabId,

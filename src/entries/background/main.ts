@@ -4,21 +4,41 @@ import browser from "webextension-polyfill";
 	import { getDataFromStorage, initialInstances, initialDomainGroups, StartsWith, Redirector, BrowserMessages, REDIRECTS} from "~/ts";
 	import {publicInstances, fetchInstances, loadRedirects, interceptLinkClick, } from "~/entries/background";
 
+
+let redirects: Redirector[] = [];
+console.log("empty redirects: ", redirects)
+const actuallyLoadRedirects = (key: string) => {
+	loadRedirects(key)
+		.then(redirectData => {
+			
+			redirects = redirectData as unknown as Redirector[];
+			console.log("REDIRECTS: ", redirects)			
+		})
+}
+
 browser.runtime.onInstalled.addListener(() => {
 	console.log("Extension installed");
 
 
 
 
-	let redirects: Redirector[] = [];
-	loadRedirects(REDIRECTS) 
-		.then(redirectData => {
-			console.log("REDIRECT DATA: ", redirectData)
-			redirects = redirectData as unknown as Redirector[];
-		});
-	BrowserMessages.listenInstanceChange(loadRedirects, REDIRECTS);
+
+	// loadRedirects(REDIRECTS) 
+	// 	.then(redirectData => {
+	// 		console.log("REDIRECT DATA: ", redirectData)
+	// 		redirects = redirectData as unknown as Redirector[];
+	// 	});
+	actuallyLoadRedirects(REDIRECTS);
+	BrowserMessages.listenInstanceChange(actuallyLoadRedirects, REDIRECTS);
 	// document.addEventListener("click", interceptLinkClick(redirects));
-	BrowserMessages.onTabChange(redirects);
+
+	//test
+	setTimeout(() => {
+		BrowserMessages.onTabChange(redirects);
+	},
+		5000
+	)
+	//BrowserMessages.onTabChange(redirects);
 
 
 
