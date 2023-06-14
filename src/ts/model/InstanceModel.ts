@@ -2,15 +2,27 @@
 import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, DomainsStructure, StandinGroup, StartsWith, initialDomainGroups, initialInstances } from "~/ts";
 import browser from "webextension-polyfill";
 import { Redirector, ValidUrl } from "../types/instances";
+import { StorageKey } from "~/ts";
 
 export class InstanceModel implements DomainsStructure{
-    constructor(private domainGroups: DomainGroup[]){}
+    constructor(
+        private domainGroups: DomainGroup[],
+        private redirectors: Redirector[]
+    ){}
 
     get DomainGroups(): DomainGroup[] {
         return this.domainGroups;
     }
     set DomainGroups(groups: DomainGroup[]) {
         this.domainGroups = groups;
+    }
+
+    get Redirectors(): Redirector[]{
+        return this.redirectors;
+    }
+
+    set Redirectors(redirectors: Redirector[]){
+        this.redirectors = redirectors;
     }
 
     getCategory = (index: number) => {
@@ -124,7 +136,7 @@ export class InstanceModel implements DomainsStructure{
 
     storeRedirectors = () => {
         const redirectors: Redirector[] = [];
-        this.domainGroups.forEach(group => {
+        this.domainGroups.forEach(group => { //DRY
             let target: ValidUrl = initialInstances.find(instance => instance.name === group.group)?.url || "https://nope.zip";
             group.apis.forEach(api => { //crap...
                 api.instances.forEach(instance => {
@@ -143,11 +155,54 @@ export class InstanceModel implements DomainsStructure{
             })
         })
 
-        browser.storage.local.set({redirects: redirectors});
+        browser.storage.local.set({redirects: redirectors}) //probably shouldn;t hard code...
+            .then(() => {
+                console.log("attempting to load redirects")
+                this.loadRedirectors("redirects"); //this isn't so good...
+            })
     }
 
+    loadRedirectors = (key: string): Promise<Redirector[]> => {
+        return new Promise((resolve, reject) => {
+            browser.storage.local.get(key)
+                .then(data => {
+                    if (browser.runtime.lastError) {
+                        return reject(browser.runtime.lastError);
+                    }    
+                    this.Redirectors = data[key];    
+                    console.log(`loadding redirects from key ${key}  :  ${data[key]}`)            
+                    resolve(data[key]);
+                })             
+        })
+    }
+
+    static generateRedirectors = (domainGroups: DomainGroup[]): Redirector[] => { //hmmm...
+        const redirectors: Redirector[] = [];
+        domainGroups.forEach(group => { 
+            let target: ValidUrl = initialInstances.find(instance => instance.name === group.group)?.url || "https://nope.zip";
+            group.apis.forEach(api => { //crap...
+                api.instances.forEach(instance => {
+                    instance.selected && (target = instance.url);
+                })
+            })
+            group.apis.forEach(api => {
+                api.instances.forEach(instance => {
+                    if(instance.selected) target = instance.url;
+                    const source: ValidUrl = instance.url;
+                    redirectors.push({
+                        source: source,
+                        target: group.redirecting? target : source,
+                    })
+                })
+            })
+        }) 
+        
+        return redirectors;
+    } 
+
     static createNew = (storageKey: string | Record<string, any> | string[] | null | undefined): Promise<DomainsStructure> => {
-        const newModel = new InstanceModel(initialDomainGroups);
+        const initialRedirectors = InstanceModel.generateRedirectors(initialDomainGroups); //this doesn't seem right...
+        const newModel = new InstanceModel(initialDomainGroups, initialRedirectors);
         return new Promise((resolve, reject) => {
             browser.storage.local.get(storageKey)
                 .then(data => {

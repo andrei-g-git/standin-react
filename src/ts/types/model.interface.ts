@@ -1,8 +1,11 @@
-import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, StandinGroup } from "~/ts";
+import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, Redirector, StandinGroup } from "~/ts";
 
 export interface DomainsStructure{
     get DomainGroups(): DomainGroup[];
     set DomainGroups(groups: DomainGroup[]);
+
+    get Redirectors(): Redirector[];
+    set Redirectors(redirectors: Redirector[]);
 
     getCategory: (index: number) => OfficialDomain; //not actually domain, just name/handle
     setCategory: (category: OfficialDomain, index: number) => void;

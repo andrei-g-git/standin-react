@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {DomainGroup, DomainsStructure, InstanceGroup, InstanceModel, initialDomainGroups} from "~/ts";
+import {DomainGroup, DomainsStructure, InstanceGroup, InstanceModel, initialDomainGroups, initialInstances} from "~/ts";
 import browser from "webextension-polyfill";
 
 export const useInstanceGroups = () => {
@@ -37,11 +37,13 @@ const extractInstances = (domainGroups: DomainGroup[]): InstanceGroup[] => {
 }
 
 export const useStoredDomains = (key: string) => {
-    const [model, setModel] = useState<DomainsStructure>(new InstanceModel(initialDomainGroups));
+    const initialRedirectors = InstanceModel.generateRedirectors(initialDomainGroups);
+    const [model, setModel] = useState<DomainsStructure>(new InstanceModel(initialDomainGroups, initialRedirectors));
     useEffect(() => {
         browser.storage.local.get(key)
             .then(data => {
-                setModel(new InstanceModel(data.domainGroups))
+                const redirectors = InstanceModel.generateRedirectors(data.domainGroups);
+                setModel(new InstanceModel(data.domainGroups, redirectors));
             })        
     },
         []
