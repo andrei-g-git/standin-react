@@ -10,6 +10,7 @@ import { YoutubeStandin } from "~/components";
 import { useState } from "react";
 import styles from "./ToggleRedirector.module.scss";
 import { OfficialDomain, capitalizeFirst } from "~/ts";
+import { convertLength } from "@mui/material/styles/cssUtils";
 
 const ToggledRedirector = (props: {
     group: OfficialDomain,
@@ -69,10 +70,33 @@ const ToggledRedirector = (props: {
                     endIcon={<YoutubeStandin width="100%" height="100%" />}
                     //size="small"
                     fullWidth
+                    onClick={() => thisShouldntBeHere(props.selected)}
                 />
             </ButtonGroup>        
         </ListItem>
 
+    )
+}
+
+const thisShouldntBeHere = (selected: string) => {
+    chrome.tabs.query({
+            active: true,
+            //lastFocusedWindow: true
+            currentWindow: true
+        },
+        (tabs) => {
+            const source = tabs[0].url;
+            if(source){
+                const urlObject = new URL(source);
+                const commonFullPath = source.split(urlObject.hostname)[1]
+                console.log(commonFullPath)   
+                
+                chrome.tabs.create({
+                    url: "https://" + selected + commonFullPath
+                })
+            }
+
+        }
     )
 }
 
