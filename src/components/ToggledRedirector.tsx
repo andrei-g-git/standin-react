@@ -9,16 +9,18 @@ import Switch from "@mui/material/Switch";
 import { YoutubeStandin } from "~/components";
 import { useState } from "react";
 import styles from "./ToggleRedirector.module.scss";
-import { OfficialDomain, capitalizeFirst } from "~/ts";
+import { OfficialDomain, PossiblyDomain, capitalizeFirst } from "~/ts";
 import { convertLength } from "@mui/material/styles/cssUtils";
+import RedirectButton from "./RedirectButton";
 
 const ToggledRedirector = (props: {
     group: OfficialDomain,
     redirecting: boolean,
-    selected: string,
+    selected: PossiblyDomain,//string,
     instances: string[],
     index: number,
-    notify: (selected: string, redirecting: boolean, index: number) => void
+    RedirectButton: JSX.Element
+    notify: (selected: PossiblyDomain/* string */, redirecting: boolean, index: number) => void
 }) => {
     const [selected, setSelected] = useState(props.selected);
     const [checked, setChecked] = useState(props.redirecting);
@@ -65,12 +67,9 @@ const ToggledRedirector = (props: {
                     </Select>                    
                 </FormControl>
 
-                <Button className={styles["square-border-left"]}
-                    variant="outlined"
-                    endIcon={<YoutubeStandin width="100%" height="100%" />}
-                    //size="small"
-                    fullWidth
-                    onClick={() => thisShouldntBeHere(props.selected)}
+                <RedirectButton className={styles["square-border-left"]}
+                    Icon={YoutubeStandin}
+                    selected={props.selected}
                 />
             </ButtonGroup>        
         </ListItem>
@@ -78,33 +77,33 @@ const ToggledRedirector = (props: {
     )
 }
 
-const thisShouldntBeHere = (selected: string) => {
-    chrome.tabs.query({
-            active: true,
-            //lastFocusedWindow: true
-            currentWindow: true
-        },
-        (tabs) => {
-            const source = tabs[0].url;
-            if(source){
-                const urlObject = new URL(source);
-                const commonFullPath = source.split(urlObject.hostname)[1]
-                console.log(commonFullPath)   
+// const thisShouldntBeHere = (selected: string) => {
+//     chrome.tabs.query({
+//             active: true,
+//             //lastFocusedWindow: true
+//             currentWindow: true
+//         },
+//         (tabs) => {
+//             const source = tabs[0].url;
+//             if(source){
+//                 const urlObject = new URL(source);
+//                 const commonFullPath = source.split(urlObject.hostname)[1]
+//                 console.log(commonFullPath)   
                 
-                chrome.tabs.create({
-                    url: "https://" + selected + commonFullPath
-                })
-            }
+//                 chrome.tabs.create({
+//                     url: "https://" + selected + commonFullPath
+//                 })
+//             }
 
-        }
-    )
-}
+//         }
+//     )
+// }
 
 const handleSwitch = (
-    selected: string, 
+    selected: PossiblyDomain/* string */, 
     index: number,    
     setChecked: React.Dispatch<React.SetStateAction<boolean>>,
-    notify: (selected: string, redirecting: boolean, index: number) => void 
+    notify: (selected: PossiblyDomain/* string */, redirecting: boolean, index: number) => void 
 ) => {
     return (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
@@ -115,12 +114,12 @@ const handleSwitch = (
 const handleSelect = (
     checked: boolean,
     index: number,
-    setSelected: React.Dispatch<React.SetStateAction<string>>,
-    notify: (selected: string, redirecting: boolean, index: number) => void
+    setSelected: React.Dispatch<React.SetStateAction<PossiblyDomain/* string */>>,
+    notify: (selected: PossiblyDomain/* string */, redirecting: boolean, index: number) => void
 ) => {
-    return (event: SelectChangeEvent<string>) => {
-        setSelected(event.target.value);
-        notify(event.target.value, checked, index);
+    return (event: SelectChangeEvent<PossiblyDomain/* string */>) => {
+        setSelected(event.target.value as PossiblyDomain);
+        notify(event.target.value as PossiblyDomain, checked, index);
     }
 }
 

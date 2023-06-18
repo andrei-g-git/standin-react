@@ -1,4 +1,4 @@
-import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, Redirector, StandinGroup } from "~/ts";
+import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, PossiblyDomain, Redirector, StandinGroup } from "~/ts";
 
 export interface DomainsStructure{
     get DomainGroups(): DomainGroup[];
@@ -24,7 +24,7 @@ export interface DomainsStructure{
 
     extractStandinData: () => StandinGroup[];
 
-    setSelected: (selected: string, redirecting: boolean, groupIndex: number) => void;
+    setSelected: (selected: PossiblyDomain/* string */, redirecting: boolean, groupIndex: number) => void;
 
     storeRedirectors: () => void;
 }

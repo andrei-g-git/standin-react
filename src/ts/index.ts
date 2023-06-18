@@ -1,6 +1,8 @@
 export type {
     EndsWith,
-    StartsWith
+    StartsWith,
+    Contains,
+    PossiblyDomain
 } from "./types/strings";
 
 export type {
@@ -22,6 +24,10 @@ export type {
     ValidUrl,
     Redirector
 } from "./types/instances";
+
+export type {
+    HasWidthAndLength
+} from "./types/props";
 
 export {
     formats
@@ -55,6 +61,10 @@ export {
 export {
     capitalizeFirst
 } from "./utils/conversions";
+
+export {
+    removeDomainFromURL
+} from "./utils/url";
 
 export {
     DOMAIN_GROUPS,

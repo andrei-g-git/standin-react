@@ -1,5 +1,5 @@
 //import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain } from "../types/instances";
-import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, DomainsStructure, StandinGroup, StartsWith, initialDomainGroups, initialInstances } from "~/ts";
+import { ApiDomain, DomainGroup, Instance, InstanceGroup, OfficialDomain, DomainsStructure, StandinGroup, StartsWith, initialDomainGroups, initialInstances, PossiblyDomain } from "~/ts";
 import browser from "webextension-polyfill";
 import { Redirector, ValidUrl } from "../types/instances";
 import { StorageKey } from "~/ts";
@@ -120,7 +120,7 @@ export class InstanceModel implements DomainsStructure{
         return standins;           
     }
 
-    setSelected = (selected: string, redirecting: boolean, index: number) => {
+    setSelected = (selected: PossiblyDomain/* string */, redirecting: boolean, index: number) => {
         const domainGroup = this.domainGroups[index];
         domainGroup.redirecting = redirecting;
         domainGroup.apis.forEach(api => {

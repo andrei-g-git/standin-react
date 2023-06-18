@@ -96,3 +96,7 @@ export const fetchInstances = async (url: string, format: number, onSuccess: Fun
         console.log(error)
     }
 }
+
+
+//scribe "api", it's crap
+//https://git.sr.ht/~edwardloveall/scribe/blob/main/docs/instances.md
