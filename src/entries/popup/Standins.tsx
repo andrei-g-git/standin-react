@@ -3,7 +3,9 @@ import List from '@mui/material/List';
 import React from 'react';
 import {ToggleGroupLegend} from '~/entries/popup';
 import { useLoadModel, useStandinData } from './hooks/storage.hooks';
-import { BrowserMessages, DomainsStructure, PossiblyDomain, StandinGroup } from '~/ts';
+import { BrowserMessages, DomainsStructure, IconDictionary, PossiblyDomain, StandinGroup } from '~/ts';
+import RedirectButton from '~/components/RedirectButton';
+import { StandinIcons } from '~/components/custom-icons';
 
 const Standins = (props: {Standin: React.FunctionComponent<any>}) => {
     const model = useLoadModel("domainGroups");
@@ -20,6 +22,10 @@ const Standins = (props: {Standin: React.FunctionComponent<any>}) => {
                             selected={standinData.selected}
                             instances={standinData.instances.map(instance => instance.name)}
                             notify={storeStandinAction(model)}
+                            RedirectButton={<RedirectButton
+                                Icon={StandinIcons[standinData.group]}
+                                selected={standinData.selected as PossiblyDomain}/> //not a good idea, should change the type in standinData
+                            }
                         />   
                     )
                 }

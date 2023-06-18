@@ -1,13 +1,14 @@
 import Button from "@mui/material/Button/Button";
 import { HasWidthAndLength, OfficialDomain, PossiblyDomain } from "~/ts";
+import styles from "./RedirectButton.module.scss";
 
 const RedirectButton = (props: {
-    className: string,
+    className?: string,
     Icon: /* OfficialDomain | */ React.FunctionComponent<any>,//((props: HasWidthAndLength) => JSX.Element)
     selected: PossiblyDomain
 }) => {
     return (
-        <Button className={props.className}
+        <Button className={styles["square-border-left"]}//{props.className}
             variant="outlined"
             endIcon={<props.Icon width="100%" height="100%" />}
             //size="small"

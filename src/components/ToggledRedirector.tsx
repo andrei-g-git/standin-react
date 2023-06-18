@@ -67,10 +67,13 @@ const ToggledRedirector = (props: {
                     </Select>                    
                 </FormControl>
 
-                <RedirectButton className={styles["square-border-left"]}
+                {/* <props.RedirectButton className={styles["square-border-left"]}
                     Icon={YoutubeStandin}
                     selected={props.selected}
-                />
+                /> */}
+                {
+                    props.RedirectButton
+                }
             </ButtonGroup>        
         </ListItem>
 

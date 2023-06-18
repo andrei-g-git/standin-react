@@ -29,6 +29,12 @@ export type {
     HasWidthAndLength
 } from "./types/props";
 
+export type{
+    IconDictionary,
+    ResizableIcon,
+    JsxDimension
+} from "./types/jsx";
+
 export {
     formats
 } from "./constants/formats";
